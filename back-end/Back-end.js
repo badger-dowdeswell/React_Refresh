@@ -1,7 +1,7 @@
 //
 // Back-End
 // ========
-// This is the back-end data manager for the react refresher
+// This is the back-end data manager for the React refresher
 // course React Poster application. It manages posts stored
 // in the local data folder in the posts.js file.
 //
@@ -42,7 +42,7 @@ app.use((req, res, next) => {
 });
 
 var dt = new Date();
-console.log("\nBack-end is now listening on port " + PORT +
+console.log("\nBack-End is now listening on port " + PORT +
             " at " + dt.toLocaleTimeString() +
             " on " + dt.toLocaleDateString() + ".");
 
