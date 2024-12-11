@@ -1,3 +1,16 @@
+//
+// REACT-REFRESH
+// =============
+// This is a React sandbox application that was used on the React refresher part of Maximilian Schwarzmüller's
+// Next.js Udemy course.
+//
+// This index.js is the main entry point for the React-Refresh application. It is launched by the web server
+// when a browser requests to connect to the site.
+//
+// Revision History
+// ================
+// 24.11.2024 BRD Original version
+//
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
