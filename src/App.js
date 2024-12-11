@@ -2,7 +2,7 @@
 // REACT-REFRESH
 // =============
 // This is a React sandbox application that was used on the React refresher part of Maximilian Schwarzmüller's
-// Next.js Udemy course.
+// Next.js Udemy course. The project repository is Rearch_Refresh on GitHub.
 //
 // Revision History
 // ================
