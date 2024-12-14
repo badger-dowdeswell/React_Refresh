@@ -63,7 +63,7 @@ app.get('/posts', async (req, res) => {
    // front-end handle a promise that resolves in real time, not
    // instantaneously.
    await new Promise((resolve, reject) => setTimeout(() => resolve(), 1500));
-
+   console.log("Loaded current posts");
    res.json({ posts: storedPosts });
 });
 
@@ -89,4 +89,5 @@ app.post('/posts', async (req, res) => {
    const updatedPosts = [newPost, ...existingPosts];
    await storePosts(updatedPosts);
    res.status(201).json({ message: 'Stored new post.', post: newPost });
+  console.log("Created new post");
 });
