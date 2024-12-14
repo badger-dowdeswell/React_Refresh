@@ -3,13 +3,17 @@
 // ========
 // This is the back-end data manager for the React refresher
 // course React Poster application. It manages posts stored
-// in the local data folder in the posts.js file.
+// in the local data folder in the posts.js file and provides
+// the api calls to exchange data with the front-end.
 //
 // Configuration
 // =============
 // On a new system, run npm install to configure all dependencies.
 // Install nonemon to automatically restart the server when the
-// code has changed: npm install -g nodemon
+// code has changed:  npm install -g nodemon
+//
+// To create a new database with no posts, place this line in
+// posts.json :   {"posts":[]}
 //
 // Revision History
 // ================
@@ -19,14 +23,13 @@
 //                and to fix a lot of broken dependencies.
 //
 import express from 'express';
-//import { json } from 'body-parser';
 import { getStoredPosts, storePosts } from './data/posts.js';
 
-// The TCP port the back-end will listen on for HTTP requests from the
-// front-end.
+// The TCP port that this back-end will listen on for HTTP requests
+// from the front-end.
 const PORT = 8080;
 //
-// Start the back-end
+// Start the Back-End
 // ==================
 const app = express();
 app.use(express.json());
@@ -41,17 +44,26 @@ app.use((req, res, next) => {
    next();
 });
 
+console.clear();
 var dt = new Date();
-console.log("\nBack-End is now listening on port " + PORT +
+console.log("Back-End is now listening on port " + PORT +
             " at " + dt.toLocaleTimeString() +
             " on " + dt.toLocaleDateString() + ".");
 
 //
 // Get Posts api
 // =============
+// This returns all the posts stored in the database as a set]
+// of JSON objects.
+//
 app.get('/posts', async (req, res) => {
    const storedPosts = await getStoredPosts();
-   // await new Promise((resolve, reject) => setTimeout(() => resolve(), 1500));
+
+   // This simulates a delay of 1.5 seconds to illustrate how to make the
+   // front-end handle a promise that resolves in real time, not
+   // instantaneously.
+   await new Promise((resolve, reject) => setTimeout(() => resolve(), 1500));
+
    res.json({ posts: storedPosts });
 });
 

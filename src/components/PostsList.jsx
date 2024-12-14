@@ -17,13 +17,54 @@ import Post from './Post';
 import NewPost from './NewPost';
 import Modal from './Modal';
 import { useState } from 'react';
-
-//import { useState } from 'react';
+import { useEffect } from 'react';
 
 function PostsList({ isPosting, onStopPosting }) {
    const [posts, setPosts] = useState([]);
+   const [isFetching, setIsFetching ] = useState(false);
+
+   //
+   // fetchPosts
+   // ==========
+   // This reads the list of previous posts from the database.
+   // The useEffect hook ensures that this does not execute in
+   // an endless loop when the component renders the list of
+   // posts. The useEffect is not returning a promise even though
+   // it is using an async function. Instead, the fetchPosts()
+   // method is called inside the useEffect and effectively localises
+   // the promise inside itself.
+   //
+   // When is the hook executed? Since the dependency array []
+   // at the end is blank, it will only be execute once when
+   // the component renders. This is a special case of useEffect
+   // that is useful for initialising some aspect of the component
+   // just once. This useEffect renders immediately after the
+   // component renders so the page will already have a page formatted
+   // ready to display the posts on.
+   //
+   useEffect(() => {
+      async function fetchPosts() {
+         setIsFetching(true);
+         const response = await fetch('http://localhost:8080/posts');
+         const resData = await response.json();
+         setPosts(resData.posts);
+         setIsFetching(false);
+      }
+      fetchPosts();
+   }, [] );
 
    function addPostHandler(postData) {
+      fetch('http://localhost:8080/posts', {
+         method: 'POST',
+         headers: {
+            'Content-Type': 'application/json'
+         },
+         body: JSON.stringify(postData)
+      });
+
+      //
+      // setPosts
+      // ========
       // The ... is the JavaScript Spread operator
       // used to add the new post to the list of existing
       // posts. The function is used to ensure React gets
@@ -33,6 +74,7 @@ function PostsList({ isPosting, onStopPosting }) {
       // multiple pending state updates. The rule is if the
       // new state depends directly on the old state, then
       // we should always use the function format.
+      //
       setPosts((existingPosts) => [postData, ...existingPosts]);
    }
    return (
@@ -47,7 +89,7 @@ function PostsList({ isPosting, onStopPosting }) {
          )}
 
          <div>
-            {posts.length > 0 ?
+            {!isFetching && posts.length > 0 ?
                <ul className={classes.posts}>
                   {/* The map function iterates through the array of
                       post objects one by one. The index parameter
@@ -62,8 +104,14 @@ function PostsList({ isPosting, onStopPosting }) {
                      />)
                   }
                </ul>
-            : <p>There are no posts to show</p>
+               : <p></p>
             }
+
+            {isFetching && (
+               <div style={{ textAlign: 'center', color: 'white'}}>
+                  <p>Loading posts</p>
+               </div>
+            )}
          </div>
       </div>
    );
