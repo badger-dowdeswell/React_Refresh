@@ -6,4 +6,4 @@ With the release of Next.js 15, and with the update to React 19, there are a lot
 
 The React organisation (www.react.org) has deprecated the create-react-app fuctionality and reccomends using Next.js as their preferred framework for using the React library.
 
-![Uploading React Client-Side and Back-End.PNG…]()
+
